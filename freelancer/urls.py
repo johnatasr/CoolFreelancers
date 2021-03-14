@@ -1,6 +1,13 @@
-from django.urls import path
-from .views import api
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from freelancer.presenters.views import FreelancerViewSet
+
+router = DefaultRouter(trailing_slash=False)
+
+router.register('freelancers', FreelancerViewSet, basename='freelancers')
+
+app_name = 'freelancer'
 
 urlpatterns = [
-    path('', api.urls),
+    path('sync/', include(router.urls)),
 ]
