@@ -7,13 +7,12 @@ class Freelancer(object):
     """ Freelancer Entity """
 
     def __init__(self,
-                id: int,
-                user: dict,
-                status: str,
-                retribution: int,
-                availability_date: datetime,
-                professional_experiences: list):
-
+                 id: int,
+                 user: dict,
+                 status: str,
+                 retribution: int,
+                 availability_date: datetime,
+                 professional_experiences: list):
         self._id = id
         self._user = user,
         self._status = status,
@@ -81,4 +80,3 @@ class ProcessedFreelancer(object):
     @property
     def computed_skills(self):
         return self._computed_skills
-

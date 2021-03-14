@@ -9,5 +9,5 @@ router.register('freelancers', FreelancerViewSet, basename='freelancers')
 app_name = 'freelancer'
 
 urlpatterns = [
-    path('sync/', include(router.urls)),
+    path('', include(router.urls)),
 ]

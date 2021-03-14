@@ -1,0 +1,1 @@
+from .tests_domain import FreelancerEnttityTestCase, ProcessedFreelancerEnttityTestCase, SkillEnttityTestCase

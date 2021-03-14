@@ -76,7 +76,7 @@ class FreelancerValidator(IValidator):
                                           message=error.args[0])
 
     def _transform_to_json(self):
-        payload = json.dumps(self.payload_raw)
+        payload = json.loads(self.payload_raw)
         return payload
 
 

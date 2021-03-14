@@ -20,8 +20,8 @@ class FreelancerInterator(IIterator):
 
         if valided_payload[0]:
             created_freelancer_entity: object = self.repo().create_freelancer_entity(valided_payload[1])
-            precessed_freelancer_entity: object = self.repo().process_freelancer_experiances(created_freelancer_entity)
-            serialized_freelancer = self.serializer(precessed_freelancer_entity)
+            precessed_freelancer_entity: object = self.repo().process_freelancer_experiences(created_freelancer_entity)
+            serialized_freelancer = self.serializer(precessed_freelancer_entity).serialize_object()
             return serialized_freelancer
 
 

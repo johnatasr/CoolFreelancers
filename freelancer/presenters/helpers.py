@@ -1,11 +1,12 @@
 from datetime import datetime
 from dateutil import relativedelta
 
+
 class FreelancerHelpers:
     @staticmethod
     def get_experiences_by_startdate(experiaeces: list):
         try:
-            experiences: dict = sorted(experiaeces, key=lambda experience: experience["startDate"], reverse=True)
+            experiences: dict = sorted(experiaeces, key=lambda experience: experience["startDate"])
             return experiences
         except:
             raise Exception("Error when sorting the list")
@@ -23,12 +24,23 @@ class FreelancerHelpers:
         return experiences
 
     @staticmethod
-    def create_skill_dict(skill, months, experience):
+    def create_skill_dict(skill: dict, months: int, experience: object):
         return {
                 'id': skill['id'],
                 'name': skill['name'],
                 'total_months': months,
-                'start_date': experience['startDate'],
-                'end_date': experience['endDate'],
-                'id_exp': experience['id']
+                'last_start_date': experience['startDate'],
+                'last_end_date': experience['endDate']
                 }
+
+    def update_skill_process(self, experience: object, sk: dict, months: int):
+        diff: int = self.diff_beetween_dates(experience['startDate'],
+                                            sk['last_end_date'])
+        sk['total_months'] += (months - diff)
+        return sk
+
+    @staticmethod
+    def set_last_skill_date(experience: object, sk: dict):
+        sk['last_start_date'] = experience["startDate"]
+        sk['last_end_date'] = experience["endDate"]
+        return sk

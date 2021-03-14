@@ -22,8 +22,6 @@ class ConflictException(CoolFreelaException):
     pass
 
 
-
-
 class EntityDoesNotExistException(CoolFreelaException):
 
     def __init__(self, entity):
