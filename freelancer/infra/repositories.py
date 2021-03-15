@@ -9,10 +9,17 @@ from typing import List
 
 
 class FreelancerRepo:
+    """
+        Camada onde ocorre a interação do Interator com as Entidades e Modelos,
+        Ocorre tambem grande parte da regra de negocio
+    """
 
     helper = FreelancerHelpers()
 
     def create_skill_entity_by_list(self, skills: list):
+        """
+            Cria uma lista de Entidade Skills no formato final
+        """
         try:
             list_of_skills: List[Skill] = []
             for skill in skills:
@@ -28,12 +35,18 @@ class FreelancerRepo:
                                     message=f'Não possível skill, erro : {err}')
 
     def create_searched_freelancer_entity(self, freelancer_id: int, skills: list):
+        """
+            Cria a Entidade final para serializacao
+        """
         return ProcessedFreelancer(
             id=freelancer_id,
             computed_skills=skills
         )
 
     def create_freelancer_entity(self, payload: dict):
+        """
+            Cria a Entidade base Freelance
+        """
         return Freelancer(
             id=payload['id'],
             user=payload['user'],
@@ -44,6 +57,9 @@ class FreelancerRepo:
         )
 
     def process_freelancer_experiences(self, freelancer: object):
+        """
+            Ocorre o processamento da busca com os meses totais de cada skill
+        """
         try:
             skills: list = []
             empty_skills_list: bool = True

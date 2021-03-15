@@ -12,18 +12,21 @@ from rest_framework.response import Response
 # Register your viewsets here.
 class FreelancerViewSet(viewsets.ModelViewSet):
     """
-       Está API é sincrona usando Django RestFramework
+       API usando Django RestFramework
     """
     interator = FreelancerInterator()
     http_method_names = ['get', 'post']
 
     @action(methods=['POST'], detail=False, url_path='send-freelance', url_name='send-freelance')
-    def get_markers(self, request):
+    def send_freelancer(self, request):
+        """
+            Enpoint principal
+        """
         try:
             freelancer = self.interator.set_params(request.data).execute()
             return Response(freelancer, status=HTTP_200_OK)
         except Exception as error:
-            return Response(error, status=HTTP_422_UNPROCESSABLE_ENTITY)
+            return Response(status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 
 

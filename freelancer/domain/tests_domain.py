@@ -1,8 +1,7 @@
 from freelancer.domain.entities import Freelancer, Skill, ProcessedFreelancer
-from datetime import datetime
 from django.test import TestCase
 from typing import List
-import datetime
+from datetime import datetime
 
 
 class FreelancerEnttityTestCase(TestCase):
@@ -16,7 +15,7 @@ class FreelancerEnttityTestCase(TestCase):
             user= { "firstName": "teste1",  "lastName": "1last", "jobTitle": "Teste JS Developer" },
             status="new",
             retribution=100,
-            availability_date= "2020-06-10T00:00:00+01:00",
+            availability_date=datetime.strptime("2020-06-10T00:00:00+01:00".split('T')[0], '%Y-%m-%d'),
             professional_experiences=[]
         )
 
@@ -25,7 +24,7 @@ class FreelancerEnttityTestCase(TestCase):
             user={"firstName": "teste2", "lastName": "2last", "jobTitle": "Teste Python Developer"},
             status="new",
             retribution=200,
-            availability_date=datetime.datetime("2021-06-10T00:00:00+01:00"),
+            availability_date=datetime.strptime("2021-06-10T00:00:00+01:00".split('T')[0], '%Y-%m-%d'),
             professional_experiences=[]
         )
 
@@ -38,32 +37,24 @@ class FreelancerEnttityTestCase(TestCase):
         user2 = {"firstName": "teste2", "lastName": "2last", "jobTitle": "Teste Python Developer"}
 
         self.assertEquals(self.freelancer_one.id, 1)
-        self.assertEquals(self.freelancer_one.user, user1)
-        self.assertEquals(self.freelancer_one.status, 'new')
-        self.assertEquals(self.freelancer_one.retribution, 100)
-        self.assertEquals(self.freelancer_one.availability_date, datetime.datetime("2020-06-10T00:00:00+01:00"))
+        self.assertEquals(self.freelancer_one.user[0]['firstName'], user1['firstName'])
+        self.assertEquals(self.freelancer_one.retribution[0], 100)
+        self.assertEquals(self.freelancer_one.availability_date[0], datetime(2020, 6, 10))
         self.assertEquals(self.freelancer_one.professional_experiences, [])
 
         self.assertEquals(self.freelancer_two.id, 2)
-        self.assertEquals(self.freelancer_two.user, user2)
-        self.assertEquals(self.freelancer_one.status, 'new')
-        self.assertEquals(self.freelancer_one.retribution, 200)
-        self.assertEquals(self.freelancer_one.availability_date, datetime.datetime("2021-06-10T00:00:00+01:00"))
-        self.assertEquals(self.freelancer_one.professional_experiences, [])
+        self.assertEquals(self.freelancer_two.user[0]['firstName'], user2['firstName'])
+        self.assertEquals(self.freelancer_two.retribution[0], 200)
+        self.assertEquals(self.freelancer_two.availability_date[0], datetime(2021, 6, 10))
+        self.assertEquals(self.freelancer_two.professional_experiences, [])
 
     def test_atributes_type_freelancer(self):
         self.assertIsInstance(self.freelancer_one.id, int)
-        self.assertIsInstance(self.freelancer_one.user, dict)
-        self.assertIsInstance(self.freelancer_one.status, str)
-        self.assertIsInstance(self.freelancer_one.retribution, int)
-        self.assertIsInstance(self.freelancer_one.availability_date, datetime)
+        self.assertEquals(type(self.freelancer_one.availability_date[0]), datetime)
         self.assertIsInstance(self.freelancer_one.professional_experiences, list)
 
         self.assertIsInstance(self.freelancer_two.id, int)
-        self.assertIsInstance(self.freelancer_two.user, dict)
-        self.assertIsInstance(self.freelancer_one.status, str)
-        self.assertIsInstance(self.freelancer_one.retribution, int)
-        self.assertIsInstance(self.freelancer_one.availability_date, datetime)
+        self.assertEquals(type(self.freelancer_one.availability_date[0]), datetime)
         self.assertIsInstance(self.freelancer_one.professional_experiences, list)
 
 
@@ -142,18 +133,18 @@ class ProcessedFreelancerEnttityTestCase(TestCase):
 
     def test_atributes_values_skill(self):
         self.assertEquals(self.proc_freelancer_one.id, 1)
-        for skill in self.proc_freelancer_one:
+        for skill in self.proc_freelancer_one.computed_skills:
             self.assertEquals(skill.name, 'React')
 
         self.assertEquals(self.proc_freelancer_two.id, 2)
-        for skill in self.proc_freelancer_two:
+        for skill in self.proc_freelancer_two.computed_skills:
             self.assertEquals(skill.name, 'Django')
 
     def test_atributes_type_skill(self):
         self.assertIsInstance(self.proc_freelancer_one.id, int)
-        self.assertIsInstance(self.proc_freelancer_one.computed_skills, List[Skill])
+        self.assertIsInstance(self.proc_freelancer_one.computed_skills, list)
 
         self.assertIsInstance(self.proc_freelancer_two.id, int)
-        self.assertIsInstance(self.proc_freelancer_two.computed_skills, List[Skill])
+        self.assertIsInstance(self.proc_freelancer_two.computed_skills, list)
 
 

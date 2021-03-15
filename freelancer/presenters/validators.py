@@ -4,6 +4,9 @@ import json
 
 
 class FreelancerValidator(IValidator):
+    """
+        Classe responsavel pela validacao do payload enviado na requisicao
+    """
     def __init__(self, payload):
         self.payload_raw = payload
 
@@ -12,6 +15,9 @@ class FreelancerValidator(IValidator):
         return value
 
     def check_experiences(self, professional_exps: list):
+        """
+            Verifica as lista de experiencias
+        """
         for experiance in professional_exps:
             if 'startDate' not in experiance:
                 raise InvalidPayloadException(source='validator', code='field_not_exists',
@@ -31,10 +37,10 @@ class FreelancerValidator(IValidator):
                                                   message='Campo obrigatório: skills')
         return True
 
-    def is_raw_payload(self):
-        ...
-
     def is_empty_payload(self) -> bool:
+        """
+           Verifica o tipo do payload
+        """
         if isinstance(self.payload_raw, (dict, object, list, bytes)):
            return True
         else:
@@ -42,9 +48,11 @@ class FreelancerValidator(IValidator):
                                           message='Payload de requisição não pode ser vazio')
 
     def validate_payload(self) -> list:
+        """
+            Validacao inicial do payload
+        """
         try:
-            if not self.is_empty_payload():
-                self._transform_to_json()
+            self.is_empty_payload()
 
             if 'freelance' not in self.payload_raw:
                 raise InvalidPayloadException(source='validator', code='field_not_exists',
@@ -74,10 +82,4 @@ class FreelancerValidator(IValidator):
         except Exception as error:
             raise InvalidPayloadException(source='validator', code=error.code,
                                           message=error.args[0])
-
-    def _transform_to_json(self):
-        payload = json.loads(self.payload_raw)
-        return payload
-
-
 

@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  backend:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    working_dir: /var/www/app
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www/app/backend
+    environment:
+      IN_DOCKER: 1

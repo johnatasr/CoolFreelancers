@@ -29,6 +29,10 @@ class Freelancer(object):
         return self._user
 
     @property
+    def status(self):
+        return self._status
+
+    @property
     def retribution(self):
         return self._retribution
 
