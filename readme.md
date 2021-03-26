@@ -1,7 +1,6 @@
 # Coolfrela
 
-Projeto desenvolvido como proposta de desafio da Órama Investimentos na seleção de desenvolvedor python do periodo
-de 02/2021 a 03/2021.
+Plataforma de busca de freelancers via Rest.
 
 ## Requisitos
 
